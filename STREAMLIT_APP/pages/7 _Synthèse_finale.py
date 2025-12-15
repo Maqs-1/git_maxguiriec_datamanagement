@@ -1,162 +1,133 @@
 import streamlit as st
 
-st.set_page_config(page_title="Synthèse finale", page_icon="🧠")
+st.set_page_config(page_title="Synthèse finale", page_icon="📊")
 
 # ---------------------------------------------------------
-# 🟦 TITRE
+# TITRE
 # ---------------------------------------------------------
-st.title("🧠 Synthèse finale du projet Bitcoin (2012–2025)")
+st.title("Synthèse finale du projet Bitcoin (2012–2025)")
 st.markdown("""
-Cette page propose une synthèse des analyses menées dans l'application :  
-structure du dataset, comportements du Bitcoin, volatilité, cycles temporels, records extrêmes, et analyse textuelle.
+Cette page présente une synthèse globale des analyses réalisées dans l’application :  
+structure du dataset, comportement du Bitcoin, cycles de marché, volatilité, volumes,  
+événements extrêmes et analyse textuelle.
 """)
 
 st.markdown("---")
 
 # ---------------------------------------------------------
-# 🟩 SECTION 1 — Structure & Qualité du Dataset
+# SECTION 1 — STRUCTURE & QUALITÉ DU DATASET
 # ---------------------------------------------------------
-st.header("📌 1. Structure et qualité du dataset")
+st.header("1. Structure et qualité du dataset")
 
 st.markdown("""
-- Le dataset contient **plus de 7,3 millions de lignes** de données minute-by-minute.
-- Les variables OHLCV permettent une analyse complète : Open, High, Low, Close, Volume.
-- Aucun doublon ni valeur manquante majeure dans le dataset initial.
-- Les variables dérivées créées (Return, Volatility, RollingVol, Year/Month/Day/Hour/Weekday) ont permis  
-  une analyse plus riche :
-  - **Return** : variations de prix,
-  - **Volatility** : amplitude journalière,
-  - **RollingVol** : volatilité glissante,
-  - **Variables temporelles** : nécessaires pour l’étude des cycles.
+- Le dataset contient **plus de 7,3 millions d’observations** minute par minute.
+- Les variables OHLCV (Open, High, Low, Close, Volume) permettent une analyse financière complète.
+- Aucune valeur manquante critique ni doublon n’a été détecté.
+- Plusieurs variables dérivées ont été créées afin d’enrichir l’analyse :
+  - **Volatility** : amplitude des mouvements de prix,
+  - **Volume en BTC et en dollars (USD)**,
+  - **Variables temporelles** (année, mois, jour, heure, jour de la semaine),
+  permettant l’étude des cycles de marché.
 """)
 
 st.markdown("---")
 
 # ---------------------------------------------------------
-# 🟦 SECTION 2 — Comportement Général du Bitcoin
+# SECTION 2 — COMPORTEMENT GÉNÉRAL DU BITCOIN
 # ---------------------------------------------------------
-st.header("📌 2. Comportement général du Bitcoin")
+st.header("2. Comportement général du Bitcoin")
 
 st.markdown("""
-Les analyses montrent que le Bitcoin est un actif :
-- **extrêmement volatil**,
-- **cyclique** (alternance bull/bear markets),
-- fortement influencé par les **cycles macroéconomiques** (FTX, COVID, bullruns 2013/2017/2021),
-- caractérisé par des mouvements extrêmes (hausses > +40%, chutes < −40%).
+L’analyse met en évidence que le Bitcoin est un actif :
 
-### Points clés :
-- Les années haussières alternent avec des années fortement baissières.
-- La volatilité augmente avec le prix : plus le Bitcoin est cher, plus il bouge.
-- Le volume est concentré sur des périodes spécifiques (pic 2014 = Mt.Gox).
+- **hautement volatil**,
+- **fortement cyclique**,
+- structuré autour d’une alternance claire entre **bull markets** et **bear markets**.
+
+### Observations principales :
+- Les **bull markets** se traduisent par des **bullruns rapides et explosifs** (2013, 2017, 2021).
+- Ces phases haussières sont suivies de **bear markets profonds**, avec des drawdowns fréquents de **−70 % à −80 %**.
+- La volatilité augmente mécaniquement avec le niveau de prix : plus le Bitcoin est cher, plus ses mouvements en valeur absolue sont importants.
+- Les volumes explosent aussi bien lors des phases d’euphorie que lors des phases de **capitulation**.
 """)
 
 st.markdown("---")
 
 # ---------------------------------------------------------
-# 🟧 SECTION 3 — Cycles temporels
+# SECTION 3 — CYCLES TEMPORELS
 # ---------------------------------------------------------
-st.header("📌 3. Cycles temporels du Bitcoin")
+st.header("3. Cycles temporels du Bitcoin")
 
 st.markdown("""
-### 🔹 Cycle journalier (heure par heure)
-- Pic d'activité entre **16h et 20h UTC** (ouverture US).
-- Creux marqué durant la nuit (01h–06h UTC).
+### Cycle journalier
+- Pic d’activité entre **16h et 20h UTC**, correspondant à l’ouverture des marchés américains.
+- Activité plus faible pendant la nuit (01h–06h UTC).
 
-### 🔹 Cycle hebdomadaire
-- Activité plus faible le **week-end**.
-- Volatilité plus élevée les **lundis** et **jeudis**.
+### Cycle hebdomadaire
+- Volumes et volatilité plus faibles le **week-end**.
+- Activité plus soutenue en semaine, en particulier en début et milieu de semaine.
 
-### 🔹 Cycle mensuel et saisonnier
-- Certains mois (janvier, novembre) montrent historiquement plus de volatilité.
-- Les heatmaps (année × mois) révèlent des régimes de marché longs (ex : 2021 très volatile, 2022 baissier).
+### Cycle mensuel et saisonnier
+- Certains mois, comme **janvier** ou **novembre**, présentent historiquement davantage de volatilité.
+- Les heatmaps (année × mois) révèlent des **régimes de marché persistants**, associés à des phases de bull market ou de bear market prolongées.
 """)
 
 st.markdown("---")
 
 # ---------------------------------------------------------
-# 🟥 SECTION 4 — Records & événements extrêmes
+# SECTION 4 — ANALYSE TEXTUELLE
 # ---------------------------------------------------------
-st.header("📌 4. Records et événements extrêmes")
+st.header("4. Analyse textuelle (presse crypto)")
 
 st.markdown("""
-Les 10–15 jours extrêmes montrent :
+L’analyse textuelle d’articles spécialisés montre que le discours médiatique est dominé par :
 
-### 🚀 Hausses exceptionnelles
-- Certaines journées dépassent **+40%** → typique de shorts squeezes ou annonces macro.
+- les notions de **volatilité**, **incertitude**, **cycle**, **marché**,
+- une prudence marquée à court terme,
+- mais une vision généralement **haussière à moyen et long terme**.
 
-### 💥 Chutes violentes
-- Des journées entre **−30% et −40%**, souvent après la fin des bullruns.
-
-### ⚡ Jours les plus volatils
-- Des amplitudes journalières de **plusieurs milliers de dollars**.
-
-### 📊 Pics de volume
-- Très corrélés aux chocs de marché (ex : effondrement Mt.Gox, FTX).
-
-Ces événements extrêmes prouvent que le Bitcoin est un actif **haut risque / haut rendement**.
+Les WordClouds permettent d’identifier rapidement les thèmes centraux et la tonalité globale des articles.
 """)
 
 st.markdown("---")
 
 # ---------------------------------------------------------
-# 🟪 SECTION 5 — Analyse textuelle
+# SECTION 5 — LIMITES DE L’ANALYSE
 # ---------------------------------------------------------
-st.header("📌 5. Analyse textuelle (articles crypto)")
+st.header("5. Limites du projet")
 
 st.markdown("""
-- Le vocabulaire dominant tourne autour de **volatilité**, **marché**, **incertitude**, **rebond**, **cycle**.
-- Les articles analysés reflètent souvent :
-  - un sentiment prudent à court terme,
-  - mais **haussier à moyen/long terme**.
-- Les WordClouds permettent d’identifier les thèmes clés d’un article en un coup d'œil.
+Malgré la robustesse de l’analyse, certaines limites doivent être soulignées :
+
+- Les données minute sont très bruitées et nécessitent une agrégation.
+- Le volume ne permet pas de distinguer acheteurs et vendeurs.
+- L’absence de données exogènes :
+  - macroéconomie,
+  - marchés traditionnels,
+  - indicateurs on-chain.
+
+Ces limites ouvrent la voie à des extensions futures plus avancées.
 """)
 
 st.markdown("---")
 
 # ---------------------------------------------------------
-# 🟫 SECTION 6 — Limites du dataset & de l’analyse
+# CONCLUSION
 # ---------------------------------------------------------
-st.header("📌 6. Limites de l’analyse")
+st.header("Conclusion générale")
 
 st.markdown("""
-Même si l’analyse reste robuste, certaines limites sont à noter :
+Ce projet met en évidence que le Bitcoin est un actif :
 
-- Les données minute sont très volumineuses → nécessité d'agréger (daily/hourly).
-- Le Return minute peut être bruité et très volatile.
-- Le dataset ne contient pas de variables exogènes :
-  - taux d'intérêt,
-  - S&P500,
-  - indicateurs macro (inflation),
-  - flux on-chain (whale activity).
+- dominé par des **bull markets violents** et des **bear markets profonds**,
+- caractérisé par une **volatilité structurellement élevée**,
+- rythmé par des phases d’euphorie, de correction et de capitulation.
 
-Ces éléments pourraient améliorer une analyse future.
+L’application Streamlit permet une exploration claire et interactive :
+- des cycles de marché,
+- des volumes et de la volatilité,
+- des périodes extrêmes,
+- et du discours médiatique autour du Bitcoin.
+
+Elle offre ainsi une **compréhension globale et structurée du marché Bitcoin**, sans chercher à produire de prédiction.
 """)
-
-st.markdown("---")
-
-# ---------------------------------------------------------
-# 🎯 SECTION 7 — Conclusion générale
-# ---------------------------------------------------------
-st.header("🎯 Conclusion générale")
-
-st.markdown("""
-Le Bitcoin est un actif unique, caractérisé par :
-
-- une **volatilité extrême**,  
-- une **structure cyclique forte**,  
-- des **événements extrêmes fréquents**,  
-- une sensibilité aux **marchés américains**,  
-- des périodes prolongées de drawdown (souvent −70 à −80 %).  
-
-Grâce à cette application, il est possible d’explorer :
-- son comportement historique,
-- ses cycles temporels,
-- ses performances annuelles,
-- ses risques extrêmes,
-- et sa représentation dans les médias (text mining).
-
-👉 **L’application offre une compréhension globale et interactive du marché Bitcoin.**
-""")
-
-st.markdown("---")
-st.success("✨ Synthèse générale du projet complétée !")

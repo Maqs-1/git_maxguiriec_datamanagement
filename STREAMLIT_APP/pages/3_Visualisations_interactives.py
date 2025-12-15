@@ -27,10 +27,8 @@ def load_data():
         "Volume": "sum"
     }).dropna()
 
-    df_daily["Return"] = df_daily["Close"].pct_change() * 100
     df_daily["Volatility"] = df_daily["High"] - df_daily["Low"]
     df_daily["Volume_USD"] = df_daily["Volume"] * df_daily["Close"]
-
     df_daily["Year"] = df_daily.index.year
     df_daily["Month"] = df_daily.index.month
     df_daily["Timestamp"] = df_daily.index
@@ -44,10 +42,8 @@ def load_data():
         "Volume": "sum"
     }).dropna()
 
-    df_weekly["Return"] = df_weekly["Close"].pct_change() * 100
     df_weekly["Volatility"] = df_weekly["High"] - df_weekly["Low"]
     df_weekly["Volume_USD"] = df_weekly["Volume"] * df_weekly["Close"]
-
     df_weekly["Year"] = df_weekly.index.year
     df_weekly["Month"] = df_weekly.index.month
     df_weekly["Timestamp"] = df_weekly.index
@@ -61,10 +57,8 @@ def load_data():
         "Volume": "sum"
     }).dropna()
 
-    df_monthly["Return"] = df_monthly["Close"].pct_change() * 100
     df_monthly["Volatility"] = df_monthly["High"] - df_monthly["Low"]
     df_monthly["Volume_USD"] = df_monthly["Volume"] * df_monthly["Close"]
-
     df_monthly["Year"] = df_monthly.index.year
     df_monthly["Month"] = df_monthly.index.month
     df_monthly["Timestamp"] = df_monthly.index
@@ -77,15 +71,15 @@ df_daily, df_weekly, df_monthly = load_data()
 # ========================================================
 # 🟦 TITRE
 # ========================================================
-st.title("📈 Visualisations avancées du Bitcoin (2012–2025)")
+st.title("Visualisations avancées du Bitcoin (2012–2025)")
 
 st.markdown("""
 Cette page permet d’explorer le Bitcoin à différentes **échelles temporelles** :
+
 - évolution du **prix**,
-- **volume en BTC** et **volume en dollars**,
-- **cycles d’activité**,
-- **relations rendement / risque**,
-- **distributions par période**.
+- **volume échangé** (BTC et USD),
+- **cycles d’activité** du marché,
+- **distributions** des variables clés.
 """)
 
 # ========================================================
@@ -121,10 +115,9 @@ df_curve = df_curve[df_curve["Year"].isin(selected_years)]
 # ========================================================
 # 🧩 ONGLET
 # ========================================================
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3 = st.tabs([
     "📉 Prix & Volume",
     "🔥 Cycles & Heatmap",
-    "🔗 Relations",
     "📦 Distributions"
 ])
 
@@ -133,46 +126,75 @@ tab1, tab2, tab3, tab4 = st.tabs([
 # ========================================================
 with tab1:
 
-    st.subheader(f"📉 Prix du Bitcoin ({period_label})")
+    st.subheader(f"Prix du Bitcoin ({period_label})")
 
-    fig_price = px.line(
-        df_curve,
-        x="Timestamp",
-        y="Close",
-        labels={"Close": "Prix ($)", "Timestamp": "Date"}
+    st.plotly_chart(
+        px.line(
+            df_curve,
+            x="Timestamp",
+            y="Close",
+            labels={"Close": "Prix ($)", "Timestamp": "Date"}
+        ),
+        use_container_width=True
     )
-    st.plotly_chart(fig_price, use_container_width=True)
 
-    st.subheader("📊 Volume échangé (BTC)")
-
-    fig_vol_btc = px.line(
-        df_curve,
-        x="Timestamp",
-        y="Volume",
-        labels={"Volume": "Volume (BTC)", "Timestamp": "Date"}
+    st.subheader("Volume échangé (BTC)")
+    st.plotly_chart(
+        px.line(
+            df_curve,
+            x="Timestamp",
+            y="Volume",
+            labels={"Volume": "Volume (BTC)", "Timestamp": "Date"}
+        ),
+        use_container_width=True
     )
-    st.plotly_chart(fig_vol_btc, use_container_width=True)
 
-    st.subheader("💵 Volume échangé (USD)")
-
-    fig_vol_usd = px.line(
-        df_curve,
-        x="Timestamp",
-        y="Volume_USD",
-        labels={"Volume_USD": "Volume ($)", "Timestamp": "Date"}
+    st.subheader("Volume échangé (USD)")
+    st.plotly_chart(
+        px.line(
+            df_curve,
+            x="Timestamp",
+            y="Volume_USD",
+            labels={"Volume_USD": "Volume ($)", "Timestamp": "Date"}
+        ),
+        use_container_width=True
     )
-    st.plotly_chart(fig_vol_usd, use_container_width=True)
+st.markdown("""
+### Repères historiques majeurs du Bitcoin
+
+L’évolution du prix du Bitcoin s’inscrit dans une succession de **bull markets**, **bear markets** et **phases de transition**, souvent déclenchés par des événements macroéconomiques ou propres à l’écosystème crypto.
+
+- **2013 – Premier bull run majeur**  
+  Explosion du prix liée à l’adoption initiale du Bitcoin.  
+  Fin brutale avec le **bear market de 2014**, accentué par l’effondrement de **Mt. Gox**.
+
+- **2017 – Bull run historique**  
+  Forte spéculation grand public, apparition massive des ICOs.  
+  Le pic de décembre 2017 est suivi d’un **bear market prolongé en 2018** (−80 %).
+
+- **2020–2021 – Bull market institutionnel**  
+  Contexte macro favorable (COVID, politiques monétaires accommodantes).  
+  Entrée des institutions → **bull run jusqu’à ~67 000 $** en 2021.
+
+- **2022 – Bear market structurel**  
+  Hausse des taux, chute de l’écosystème crypto, faillites majeures  
+  (**LUNA, Celsius, FTX**) → forte contraction du marché.
+
+- **2023–2025 – Phase de reprise et nouveau cycle**  
+  Retour progressif de la liquidité, anticipation du **halving**,  
+  transition d’un bear market vers un **nouveau bull cycle**.
+""")
+
 
 # ========================================================
-# TAB 2 — CYCLES & HEATMAP (HOURLY FIXE)
+# TAB 2 — CYCLES & HEATMAP
 # ========================================================
 with tab2:
 
-    st.subheader("🔥 Cycle d’activité du marché (UTC)")
+    st.subheader("Cycle d’activité du marché (UTC)")
 
     df_hourly = pd.read_csv("data/DATASET_BTC.csv")
     df_hourly["Timestamp"] = pd.to_datetime(df_hourly["Timestamp"], unit="s")
-
     df_hourly["Hour"] = df_hourly["Timestamp"].dt.hour
     df_hourly["Weekday"] = df_hourly["Timestamp"].dt.weekday
     df_hourly["Year"] = df_hourly["Timestamp"].dt.year
@@ -189,77 +211,38 @@ with tab2:
     heatmap.index = ["Lundi", "Mardi", "Mercredi",
                      "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 
-    fig_hm = px.imshow(
-        heatmap,
-        aspect="auto",
-        color_continuous_scale="YlOrRd",
-        labels=dict(x="Heure (UTC)", y="Jour", color="Volume moyen (BTC)")
+    st.plotly_chart(
+        px.imshow(
+            heatmap,
+            aspect="auto",
+            color_continuous_scale="YlOrRd",
+            labels=dict(x="Heure (UTC)", y="Jour", color="Volume moyen (BTC)")
+        ),
+        use_container_width=True
     )
 
-    st.plotly_chart(fig_hm, use_container_width=True)
-
 # ========================================================
-# TAB 3 — RELATIONS
+# TAB 3 — DISTRIBUTIONS
 # ========================================================
 with tab3:
 
-    st.subheader("🔗 Relations rendement / risque")
-
-    relation = st.selectbox(
-        "Analyse",
-        [
-            "Prix vs Volatilité",
-            "Volume USD vs Volatilité",
-            "Return vs Volatilité"
-        ]
-    )
-
-    if relation == "Prix vs Volatilité":
-        x, y = "Close", "Volatility"
-        x_label, y_label = "Prix ($)", "Volatilité ($)"
-
-    elif relation == "Volume USD vs Volatilité":
-        x, y = "Volume_USD", "Volatility"
-        x_label, y_label = "Volume ($)", "Volatilité ($)"
-
-    else:
-        x, y = "Return", "Volatility"
-        x_label, y_label = "Return (%)", "Volatilité ($)"
-
-    fig_scatter = px.scatter(
-        df_curve,
-        x=x,
-        y=y,
-        opacity=0.5,
-        labels={x: x_label, y: y_label}
-    )
-
-    st.plotly_chart(fig_scatter, use_container_width=True)
-
-# ========================================================
-# TAB 4 — DISTRIBUTIONS
-# ========================================================
-with tab4:
-
-    st.subheader("📦 Distributions")
+    st.subheader("Distributions des variables")
 
     var = st.selectbox(
         "Variable",
-        ["Return", "Volatility", "Volume_USD"]
+        ["Volatility", "Volume_USD"]
     )
 
     label_map = {
-        "Return": "Return (%)",
         "Volatility": "Volatilité ($)",
         "Volume_USD": "Volume ($)"
     }
 
-    fig_box = px.box(
-        df_curve,
-        y=var,
-        labels={var: label_map[var]}
+    st.plotly_chart(
+        px.box(
+            df_curve,
+            y=var,
+            labels={var: label_map[var]}
+        ),
+        use_container_width=True
     )
-
-    st.plotly_chart(fig_box, use_container_width=True)
-
-st.success("✅ Échelles temporelles cohérentes — données prêtes pour l’oral.")

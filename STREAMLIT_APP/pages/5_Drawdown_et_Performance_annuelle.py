@@ -3,7 +3,11 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
-st.set_page_config(page_title="Performance & Drawdown", page_icon="📉")
+st.set_page_config(
+    page_title="Performance & Drawdown",
+    page_icon="📉",
+    layout="wide"
+)
 
 # ---------------------------------------------------------
 # 🔧 Chargement des données
@@ -43,7 +47,7 @@ df_raw, df_daily = load_data()
 # ---------------------------------------------------------
 # 🟦 TITRE
 # ---------------------------------------------------------
-st.title("📉 Performance annuelle & Drawdown du Bitcoin")
+st.title("Performance annuelle & Drawdown du Bitcoin")
 
 st.markdown("""
 Cette page met en avant le **comportement long terme** du Bitcoin :
@@ -65,7 +69,7 @@ df_d = df_daily[df_daily["Year"].isin(selected_years)].copy()
 # ---------------------------------------------------------
 # 📊 Performance annuelle
 # ---------------------------------------------------------
-st.subheader("📈 Performance annuelle (%)")
+st.subheader("Performance annuelle (%)")
 
 # Rendement annuel basé sur Close (1er jan -> 31 déc)
 yearly_close = df_d.groupby("Year")["Close"].agg(["first", "last"])
@@ -101,7 +105,7 @@ st.markdown("""
 # ---------------------------------------------------------
 # ⚡ Volatilité annuelle
 # ---------------------------------------------------------
-st.subheader("⚡ Volatilité journalière moyenne par année")
+st.subheader("Volatilité journalière moyenne par année")
 
 yearly_vol = df_d.groupby("Year")["Volatility"].mean()
 vol_df = yearly_vol.reset_index().rename(columns={"Volatility": "Volatilité_moyenne"})
@@ -124,7 +128,7 @@ Plus la barre est haute, plus le Bitcoin a bougé fortement au cours de l'année
 # ---------------------------------------------------------
 # 📉 Courbe de Drawdown
 # ---------------------------------------------------------
-st.subheader("📉 Drawdown du Bitcoin (%)")
+st.subheader("Drawdown du Bitcoin (%)")
 
 fig_dd = px.area(
     df_d.reset_index(),
@@ -145,5 +149,4 @@ de **−70 à −80 %** lors des grands bear markets.
 """)
 
 # ---------------------------------------------------------
-st.markdown("---")
-st.success("✨ Analyse de la performance annuelle et du drawdown générée.")
+

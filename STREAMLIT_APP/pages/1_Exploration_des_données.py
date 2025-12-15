@@ -37,7 +37,7 @@ df = load_data()
 # -----------------------------------------------
 # 🟦 SECTION 1 : Source & Description du Dataset
 # -----------------------------------------------
-st.header("📌 1. Source et description du dataset")
+st.header("1. Source et description du dataset")
 
 st.markdown("""
 - **Source :** Kaggle — Historical Bitcoin Minute-by-minute Dataset  
@@ -56,7 +56,7 @@ st.markdown("""
 # -----------------------------------------------
 # 🟦 SECTION 2 : Dimensions du dataset
 # -----------------------------------------------
-st.header("📌 2. Dimensions du dataset")
+st.header("2. Dimensions du dataset")
 
 rows, cols = df.shape
 st.metric("Nombre d'observations", f"{rows:,}".replace(",", " "))
@@ -66,7 +66,7 @@ st.metric("Nombre de variables", cols)
 # -----------------------------------------------
 # 🟦 SECTION 3 : Aperçu des données
 # -----------------------------------------------
-st.header("📌 3. Aperçu des données")
+st.header("3. Aperçu des données")
 
 n = st.slider("Nombre de lignes à afficher :", 5, 50, 10)
 st.dataframe(df.head(n))
@@ -75,7 +75,7 @@ st.dataframe(df.head(n))
 # -----------------------------------------------
 # 🟦 SECTION 4 : Types des variables
 # -----------------------------------------------
-st.header("📌 4. Types des variables")
+st.header("4. Types des variables")
 
 st.dataframe(df.dtypes.rename("Type"))
 
@@ -83,7 +83,7 @@ st.dataframe(df.dtypes.rename("Type"))
 # -----------------------------------------------
 # 🟦 SECTION 5 : Valeurs manquantes
 # -----------------------------------------------
-st.header("📌 5. Valeurs manquantes")
+st.header("5. Valeurs manquantes")
 
 missing = df.isna().sum()
 missing_df = pd.DataFrame({
@@ -96,7 +96,7 @@ st.dataframe(missing_df)
 # -----------------------------------------------
 # 🟦 SECTION 6 : Doublons
 # -----------------------------------------------
-st.header("📌 6. Doublons dans le dataset")
+st.header("6. Doublons dans le dataset")
 
 duplicates = df.duplicated().sum()
 st.write(f"🔁 Nombre de lignes dupliquées : **{duplicates}**")
@@ -105,7 +105,7 @@ st.write(f"🔁 Nombre de lignes dupliquées : **{duplicates}**")
 # -----------------------------------------------
 # 🟦 SECTION 7 : Statistiques descriptives globales
 # -----------------------------------------------
-st.header("📌 7. Statistiques descriptives")
+st.header("7. Statistiques descriptives")
 
 st.write("Statistiques pour les variables numériques (OHLCV) :")
 st.dataframe(df.describe().T)
@@ -116,7 +116,7 @@ st.dataframe(df.describe().T)
 # 🟦 SECTION 8 : Variables dérivées créées dans le projet
 # ============================================================
 
-st.header("📌 8. Variables dérivées créées pour l'analyse")
+st.header("8. Variables dérivées créées pour l'analyse")
 
 st.markdown("""
 Au cours du projet, plusieurs variables ont été créées afin d'enrichir l'analyse et de mieux 
@@ -137,8 +137,7 @@ df['Weekday'] = df['Timestamp'].dt.weekday
 # Tableau explicatif
 variables_deriv = {
     "Return": "Variation relative du prix entre deux périodes",
-    "Volatility": "Amplitude journalière (High – Low)",
-    "RollingVol": "Volatilité glissante sur 60 minutes",
+    "Volatility": "Amplitude d'une période (High – Low)",
     "Year": "Année extraite du Timestamp",
     "Month": "Mois extrait du Timestamp",
     "Day": "Jour du mois",
@@ -149,8 +148,28 @@ variables_deriv = {
 df_vars = pd.DataFrame.from_dict(variables_deriv, orient='index', columns=["Description"])
 st.dataframe(df_vars)
 
-st.markdown("---")
-st.info("Les variables dérivées sont maintenant disponibles dans l'application pour les analyses suivantes.")
+# ============================================================
+# 🟦 SECTION 9 : Téléchargement du dataset
+# ============================================================
 
-st.markdown("---")
-st.success("✨ La page d’exploration du dataset est complète ! Passez à l’analyse descriptive dans le menu Streamlit.")
+st.header("9. Téléchargement du dataset")
+
+st.markdown("""
+Vous pouvez télécharger le jeu de données utilisé dans ce projet afin de :
+- reproduire les analyses,
+- explorer les données hors de l’application,
+- effectuer vos propres traitements.
+""")
+
+@st.cache_data
+def convert_df_to_csv(df):
+    return df.to_csv(index=False).encode("utf-8")
+
+csv_data = convert_df_to_csv(df)
+
+st.download_button(
+    label="📥 Télécharger le dataset Bitcoin (CSV)",
+    data=csv_data,
+    file_name="DATASET_BTC.csv",
+    mime="text/csv"
+)

@@ -25,7 +25,7 @@ STOPWORDS_FR = load_stopwords()
 # ---------------------------------------------------------
 # 🟦 TITRE
 # ---------------------------------------------------------
-st.title("🧠 Analyse Textuelle (Text Mining) autour du Bitcoin")
+st.title("Analyse Textuelle (Text Mining) autour du Bitcoin")
 
 st.markdown("""
 Cette page permet d'analyser un **article en français** parlant du Bitcoin :
@@ -38,7 +38,7 @@ Cette page permet d'analyser un **article en français** parlant du Bitcoin :
 # ---------------------------------------------------------
 # 📝 Zone de texte pour l'article
 # ---------------------------------------------------------
-st.subheader("📝 Texte à analyser")
+st.subheader("Texte à analyser")
 
 default_text = """
 Bitcoin : Pour Tom Lee, le BTC retournera à 100 000 $ en 2025, mais plus question des 250 000 $.
@@ -99,7 +99,7 @@ cleaned_text = " ".join(words)
 st.write(f"Nombre de mots après nettoyage : **{len(words)}**")
 
 # ---------------------------------------------------------
-# 🔝 Mots les plus fréquents
+# Mots les plus fréquents
 # ---------------------------------------------------------
 st.subheader("🔝 Mots les plus fréquents")
 
@@ -128,9 +128,9 @@ ax.axis("off")
 st.pyplot(fig)
 
 # ---------------------------------------------------------
-# 🧠 Interprétation simple
+# Interprétation simple
 # ---------------------------------------------------------
-st.subheader("🧠 Interprétation automatique (rapide)")
+st.subheader("Interprétation automatique (rapide)")
 
 main_words = [w for w, _ in most_common[:7]]
 st.markdown(f"""
@@ -147,5 +147,4 @@ Ce type d'analyse textuelle permet de :
 - comparer plusieurs articles entre eux sur la même période.
 """)
 
-st.markdown("---")
-st.success("✨ Analyse textuelle terminée. Tu peux changer le texte pour comparer d'autres articles.")
+

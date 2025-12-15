@@ -32,7 +32,7 @@ df = load_data()
 # =========================================================
 # 🎛️ FILTRES
 # =========================================================
-st.title("🔥 Cycles & Heatmaps du Bitcoin")
+st.title("Cycles & Heatmaps du Bitcoin")
 
 years = sorted(df["Year"].unique())
 selected_years = st.sidebar.multiselect("📅 Années à analyser", years, default=years)
@@ -58,7 +58,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
 # 🟦 TAB 1 — CYCLE JOURNALIER (VRAI volume horaire)
 # =========================================================
 with tab1:
-    st.subheader("🕒 Cycle journalier – volume & volatilité par heure")
+    st.subheader("Cycle journalier – volume & volatilité par heure")
 
     hourly = df_filt.resample("H").agg({
         volume_col: "sum",
@@ -98,7 +98,7 @@ with tab1:
 # 🟧 TAB 2 — CYCLE HEBDOMADAIRE (VRAI volume journalier)
 # =========================================================
 with tab2:
-    st.subheader("📆 Cycle hebdomadaire – volume & volatilité par jour")
+    st.subheader("Cycle hebdomadaire – volume & volatilité par jour")
 
     daily = df_filt.resample("D").agg({
         volume_col: "sum",
@@ -143,7 +143,7 @@ with tab2:
 # 🟩 TAB 3 — CYCLE MENSUEL (VRAI volume mensuel)
 # =========================================================
 with tab3:
-    st.subheader("📅 Cycle mensuel – volume & volatilité par mois")
+    st.subheader("Cycle mensuel – volume & volatilité par mois")
 
     monthly = df_filt.resample("M").agg({
         volume_col: "sum",
@@ -182,7 +182,7 @@ with tab3:
 # 🟥 TAB 4 — HEATMAPS SAISONNIÈRES
 # =========================================================
 with tab4:
-    st.subheader("🌡️ Heatmaps saisonnières (Année × Mois)")
+    st.subheader("Heatmaps saisonnières (Année × Mois)")
 
     heat = df_filt.resample("M").agg({
         volume_col: "sum",
@@ -214,4 +214,3 @@ with tab4:
     )
 
 
-st.success("✅ Volumes moyens calculés correctement (heure / jour / mois) — interprétation claire et solide.")

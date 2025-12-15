@@ -58,14 +58,6 @@ df, df_daily, df_weekly, df_monthly = load_data()
 # --------------------------------------------------------
 st.title("📊 Statistiques Descriptives du Bitcoin")
 
-st.markdown("""
-Cette page présente les statistiques descriptives des principales variables du Bitcoin.  
-
-📌 Les **returns sont exprimés en pourcentage (%)** et calculés à différentes
-échelles temporelles (journalière, hebdomadaire, mensuelle) afin de garantir
-des graphiques lisibles et interprétables.
-""")
-
 # --------------------------------------------------------
 # 1️⃣ Choix du type de graphique
 # --------------------------------------------------------
@@ -206,5 +198,3 @@ else:
     st.pyplot(fig)
 
 # --------------------------------------------------------
-st.markdown("---")
-st.success("✅ Graphiques générés avec unités cohérentes et interprétables.")
