@@ -1,4 +1,4 @@
-# 📊 Bitcoin Market Analysis (2012–2025)
+#  Bitcoin Market Analysis (2012–2025)
 
 Projet réalisé dans le cadre du **Diplôme Universitaire Data Analyst – La Sorbonne**.  
 Ce projet propose une **analyse complète et interactive du marché du Bitcoin** à partir de données minute par minute, couvrant la période **2012–2025**.
@@ -14,7 +14,7 @@ Ce projet propose une **analyse complète et interactive du marché du Bitcoin**
 
 ---
 
-## 📚 Source des données
+##  Source des données
 
 - **Dataset** : *Historical Bitcoin Minute-by-minute Dataset*  
 - **Plateforme** : Kaggle  
@@ -25,7 +25,7 @@ Ce projet propose une **analyse complète et interactive du marché du Bitcoin**
 
 ---
 
-## 🎯 Objectifs du projet
+##  Objectifs du projet
 
 - Comprendre le **comportement historique du Bitcoin**
 - Identifier les **phases de bull market et bear market**
@@ -40,7 +40,7 @@ Ce projet propose une **analyse complète et interactive du marché du Bitcoin**
 
 ---
 
-## 🧠 Contenu de l’application Streamlit
+##  Contenu de l’application Streamlit
 
 L’application est organisée en plusieurs pages :
 
